@@ -16,16 +16,17 @@ function Chat() {
   const classes = useStyles();
   const [messages, setMessages] = useState([]);
   const dummy = useRef();
-  const ref = firebase
-    .firestore()
-    .collection("messages")
-    .orderBy("createdAt")
-    .limit(20);
+
   useEffect(() => {
-    ref.onSnapshot((snapShot) => {
-      const data = snapShot.docs.map((doc) => doc.data());
-      setMessages(data);
-    });
+    firebase
+      .firestore()
+      .collection("messages")
+      .orderBy("createdAt")
+      .limit(25)
+      .onSnapshot((snapShot) => {
+        const data = snapShot.docs.map((doc) => doc.data());
+        setMessages(data);
+      });
   }, []);
 
   return (
